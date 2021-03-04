@@ -1,0 +1,50 @@
+{% extends('layout/base.html') %}
+
+{% block content %}
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert-{{ category }} p-2">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <form action="{{ url_for('notify') }}" method="post">
+                {{ form.hidden_tag() }}
+        
+                <div class="form-group">
+                    {{ form.code.label(class="form-control-label") }}
+                    {% if form.code.errors %} 
+                        {{ form.code(class="form-control is-invalid") }}
+                        {% for error in form.code.errors %}
+                        <div class="invalid-feedback">
+                            <span>{{ error }}</span>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        {{ form.code(class="form-control") }}
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    {{ form.msg.label(class="form-control-label") }}
+                    {% if form.msg.errors %} 
+                        {{ form.msg(class="form-control is-invalid") }}
+                        {% for error in form.msg.errors %}
+                        <div class="invalid-feedback">
+                            <span>{{ error }}</span>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        {{ form.msg(class="form-control") }}
+                    {% endif %}
+                </div>
+        
+                <div class="form-group mt-2">
+                    {{ form.submit(class="btn btn-primary") }}
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

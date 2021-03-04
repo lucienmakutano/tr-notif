@@ -1,0 +1,44 @@
+{% extends('layout/base.html') %}
+
+{% block content %}
+    <div class="card" style="width: 18rem;">
+        <form action="{{ url_for('add_tr') }}" method="post">
+            {{ form.hidden_tag() }}
+    
+            <div class="form-group">
+                {{ form.code.label(class="form-control-label") }}
+                {% if form.code.errors %} 
+                    {{ form.code(class="form-control is-invalid") }}
+                    {% for error in form.code.errors %}
+                    <div class="invalid-feedback">
+                        <span>{{ error }}</span>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    {{ form.code(class="form-control") }}
+                {% endif %}
+            </div>
+    
+            <div class="form-group">
+                {{ form.phone.label(class="form-control-label") }}
+                <div class="input-group mb-3">
+                    <span class="input-group-text">+254</span>
+                    {% if form.phone.errors %}
+                        {{ form.phone(class="form-control is-invalid") }}
+                        {% for error in form.phone.errors %}
+                            <div class="invalid-feedback">
+                                <span>{{ error }}</span>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {{ form.phone(class="form-control") }}
+                    {% endif %}
+                </div>
+            </div>
+    
+            <div class="form-group mt-2">
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+        </form>
+    </div>
+{% endblock %}
